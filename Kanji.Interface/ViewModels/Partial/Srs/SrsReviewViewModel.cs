@@ -621,7 +621,9 @@ namespace Kanji.Interface.ViewModels
 				double numberOfMistakes = Convert.ToDouble(group.WrongAnswerCount);
 				modifier *= Convert.ToInt32(group.Reference.CurrentGrade >= 4 ? 2 * Math.Round(numberOfMistakes / 2 + 0.1, MidpointRounding.AwayFromZero)
                     : 1 * Math.Round(numberOfMistakes / 2 + 0.1, MidpointRounding.AwayFromZero));
-			}
+                if (Math.Abs(modifier) > group.Reference.CurrentGrade)
+                    modifier = group.Reference.CurrentGrade * -1;
+            }
             SrsLevel newLevel = newLevel = SrsLevelStore.Instance.GetLevelByValue(
                     group.Reference.CurrentGrade + modifier);
 
