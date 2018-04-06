@@ -29,7 +29,7 @@ namespace Kanji.Interface.Models
         /// Gets or sets a value indicating if at least one of the
         /// questions was answered wrong.
         /// </summary>
-        public bool IsWrong { get; set; }
+        public int WrongAnswerCount { get; set; }
 
         /// <summary>
         /// Gets or sets the questions of this group.
@@ -89,6 +89,7 @@ namespace Kanji.Interface.Models
         public SrsQuestionGroup(SrsEntry reference)
         {
             Reference = reference;
+            WrongAnswerCount = 0;
 
             Questions = new List<SrsQuestion>();
             if (!string.IsNullOrWhiteSpace(reference.Meanings))

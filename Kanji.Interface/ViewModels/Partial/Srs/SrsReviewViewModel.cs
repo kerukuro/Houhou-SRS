@@ -556,7 +556,7 @@ namespace Kanji.Interface.ViewModels
                 // Wrong answer.
                 // Don't set the question as answered.
                 // Set the group as wrong.
-                CurrentQuestion.ParentGroup.IsWrong = true;
+                CurrentQuestion.ParentGroup.WrongAnswerCount++;
             }
         }
 
@@ -594,7 +594,7 @@ namespace Kanji.Interface.ViewModels
             }
 
             // Update the success/failure count.
-            if (group.IsWrong)
+            if (group.WrongAnswerCount > 0)
             {
                 group.Reference.FailureCount++;
             }
@@ -615,7 +615,13 @@ namespace Kanji.Interface.ViewModels
         private SrsLevel GetUpdatedLevel(SrsQuestionGroup group)
         {
             // Take the upper/lower level depending on the success state.
-            int modifier = group.IsWrong ? -1 : 1;
+            int modifier = group.WrongAnswerCount > 0 ? -1 : 1;
+			if (modifier < 0)
+			{
+				double numberOfMistakes = Convert.ToDouble(group.WrongAnswerCount);
+				modifier *= Convert.ToInt32(group.Reference.CurrentGrade >= 4 ? 2 * Math.Round(numberOfMistakes / 2 + 0.1, MidpointRounding.AwayFromZero)
+                    : 1 * Math.Round(numberOfMistakes / 2 + 0.1, MidpointRounding.AwayFromZero));
+			}
             SrsLevel newLevel = newLevel = SrsLevelStore.Instance.GetLevelByValue(
                     group.Reference.CurrentGrade + modifier);
 
