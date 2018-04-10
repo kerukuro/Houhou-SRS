@@ -389,7 +389,7 @@ namespace Kanji.Database.Dao
             string sortClause = "ORDER BY ";
             if (isCommonFirst)
             {
-                sortClause += string.Format("v.{0} DESC,", SqlHelper.Field_Vocab_IsCommon);
+                sortClause += string.Format("v.{0} DESC,CASE WHEN v.{1} IS NULL THEN 1 ELSE 0 END,v.{1} ASC,", SqlHelper.Field_Vocab_IsCommon, SqlHelper.Field_Vocab_WikipediaRank);
             }
             sortClause += string.Format("length(v.{0}) {1}",
                 SqlHelper.Field_Vocab_KanaWriting,
