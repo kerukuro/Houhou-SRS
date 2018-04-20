@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:controls="clr-namespace:Kanji.Interface.Controls"
       mc:Ignorable="d" Focusable="true"
-      d:DesignHeight="300" d:DesignWidth="600" KeyDown="OnKeyDown" IsVisibleChanged="OnIsVisibleChanged">
+      d:DesignHeight="300" d:DesignWidth="600" KeyDown="OnKeyDown" KeyUp="OnKeyUp" IsVisibleChanged="OnIsVisibleChanged">
     
     <DockPanel>
         <controls:NavigationBar DockPanel.Dock="Top" />

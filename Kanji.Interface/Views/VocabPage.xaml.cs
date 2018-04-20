@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -68,6 +68,25 @@ namespace Kanji.Interface.Views
                         break;
                 }
             }
+
+            switch (e.Key)
+            {
+                case Key.Enter:
+                    e.Handled = true;
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Since a <see cref="GalaSoft.MvvmLight.Command.RelayCommand"/> does not accept keyboard shortcuts,
+        /// we have to manually invoke the commands on a keyboard event.
+        /// </summary>
+        private void OnKeyUp(object sender, KeyEventArgs e)
+        {
+            KeyboardDevice keyboardDevice = e.KeyboardDevice;
+
+            if (keyboardDevice.IsKeyDown(Key.LeftCtrl) || keyboardDevice.IsKeyDown(Key.RightCtrl))
+                return;
 
             switch (e.Key)
             {
