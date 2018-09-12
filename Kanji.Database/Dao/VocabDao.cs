@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
@@ -389,7 +389,14 @@ namespace Kanji.Database.Dao
             string sortClause = "ORDER BY ";
             if (isCommonFirst)
             {
-                sortClause += string.Format("v.{0} DESC,CASE WHEN v.{1} IS NULL THEN 1 ELSE 0 END,v.{1} ASC,", SqlHelper.Field_Vocab_IsCommon, SqlHelper.Field_Vocab_WikipediaRank);
+                sortClause += string.Format("v.{0} DESC,"
+                    +
+                    "CASE WHEN v.{2} IS NULL THEN 1 ELSE 0 END,v.{2} ASC,"
+                    +
+                    "CASE WHEN v.{3} IS NULL THEN 1 ELSE 0 END,v.{3} ASC,"
+                    +
+                    "CASE WHEN v.{1} IS NULL THEN 1 ELSE 0 END,v.{1} ASC,"
+                    , SqlHelper.Field_Vocab_IsCommon, SqlHelper.Field_Vocab_WikipediaRank, SqlHelper.Field_Vocab_BCCJWRank, SqlHelper.Field_Vocab_BCCJWLRank);
             }
             sortClause += string.Format("length(v.{0}) {1}",
                 SqlHelper.Field_Vocab_KanaWriting,

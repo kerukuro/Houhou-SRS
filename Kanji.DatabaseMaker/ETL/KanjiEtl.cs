@@ -51,6 +51,7 @@ namespace Kanji.DatabaseMaker
         private Dictionary<string, short> _jlptDictionary;
         private Dictionary<string, int> _frequencyRankDictionary;
         private Dictionary<string, int> _waniKaniDictionary;
+        private Dictionary<string, int> _kklcDictionary;
         private log4net.ILog _log;
 
         private ZipArchive _svgZipArchive;
@@ -86,6 +87,7 @@ namespace Kanji.DatabaseMaker
             CreateJlptDictionary();
             CreateFrequencyRankDictionary();
             CreateWkDictionary();
+            CreateKKLCDictionary();
         }
 
         #endregion
@@ -137,6 +139,23 @@ namespace Kanji.DatabaseMaker
                 if (!_frequencyRankDictionary.ContainsKey(split[0]))
                 {
                     _frequencyRankDictionary.Add(split[0], i++);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Reads the WaniKani kanji list file and fills a dictionary that will be used to look up the info
+        /// during the execution of the ETL.
+        /// </summary>
+        private void CreateKKLCDictionary()
+        {
+            _kklcDictionary = new Dictionary<string, int>();
+            foreach (string line in File.ReadLines(PathHelper.KKLCKanjiListPath))
+            {
+                for (int i = 0; i < line.Length; i++)
+                {
+                    if (!_kklcDictionary.ContainsKey(line[i].ToString()))
+                        _kklcDictionary.Add(line[i].ToString(), i + 1);
                 }
             }
         }
@@ -330,6 +349,12 @@ namespace Kanji.DatabaseMaker
                 if (_waniKaniDictionary.ContainsKey(kanji.Character))
                 {
                     kanji.WaniKaniLevel = _waniKaniDictionary[kanji.Character];
+                }
+
+                // Find the WaniKani level using the dictionary.
+                if (_kklcDictionary.ContainsKey(kanji.Character))
+                {
+                    kanji.KKLCLevel = _kklcDictionary[kanji.Character];
                 }
 
                 // In the reading/meaning node...

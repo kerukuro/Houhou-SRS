@@ -60,6 +60,11 @@ namespace Kanji.Interface.Models
             get { return DbKanji.WaniKaniLevel.HasValue && Kanji.Interface.Properties.Settings.Default.ShowKanjiWkLevel; }
         }
 
+        public bool ShowKKLCLevel
+        {
+            get { return DbKanji.KKLCLevel.HasValue && Kanji.Interface.Properties.Settings.Default.ShowKanjiWkLevel; }
+        }
+
         public bool ShowStrokes
         {
             get { return Kanji.Interface.Properties.Settings.Default.ShowKanjiStrokes; }

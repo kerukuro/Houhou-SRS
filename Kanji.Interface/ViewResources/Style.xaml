@@ -38,6 +38,8 @@
     <converters:KanjiToReadingListConverter x:Key="KanjiToReadingListConverter" />
     <converters:WkLevelToBrushConverter x:Key="WkLevelToBrushConverter" />
     <converters:WikipediaRankToBrushConverter x:Key="WikipediaRankToBrushConverter" />
+    <converters:WikipediaRankToBrushConverter x:Key="BCCJWRankToBrushConverter" />
+    <converters:WikipediaRankToBrushConverter x:Key="BCCJWLRankToBrushConverter" />
     <converters:ExtendedVocabToVariantListConverter x:Key="ExtendedVocabToVariantListConverter" />
     <converters:NullValueToVisibilityConverter x:Key="NullValueToVisibilityConverter" />
 
@@ -1274,7 +1276,65 @@
                                                                             <Setter Property="Text">
                                                                                 <Setter.Value>
                                                                                     <Binding Path="DbVocab.WikipediaRank" Converter="{StaticResource IntegerToOrdinalStringConverter}"
-                                                                                        StringFormat="{}{0} most used" />
+                                                                                        StringFormat="{}{0}" />
+                                                                                </Setter.Value>
+                                                                            </Setter>
+                                                                            <Setter Property="FontSize" Value="10" />
+                                                                            <Setter Property="Foreground" Value="#555555" />
+                                                                        </Style>
+                                                                    </TextBlock.Style>
+                                                                </TextBlock>
+                                                            </DockPanel>
+                                                        </Border>
+                                                        
+                                                        <Border Margin="5 0 0 0" BorderThickness="1" BorderBrush="#55000000" CornerRadius="2"
+                                                            HorizontalAlignment="Left" Padding="5 0 5 0"
+                                                            Visibility="{Binding ShowBCCJWRank, Converter={StaticResource ValueToVisibilityConverter}}"
+                                                            Background="{Binding DbVocab.BCCJWRank, Converter={StaticResource BCCJWRankToBrushConverter}}">
+                                                            <Border.ToolTip>
+                                                                <ToolTip Content="{Binding DbVocab.BCCJWRank, Converter={StaticResource IntegerToOrdinalStringConverter}}"
+                                                                    ContentStringFormat="{}{0} frequency position in BCCJW ranking without comounds." />
+                                                            </Border.ToolTip>
+                                                            <DockPanel LastChildFill="True">
+                                                                <TextBlock HorizontalAlignment="Left" FontSize="10" DockPanel.Dock="Left" Margin="0 0 6 0" FontWeight="SemiBold">
+                                                                    BS
+                                                                </TextBlock>
+                                                                <TextBlock HorizontalAlignment="Center">
+                                                                    <TextBlock.Style>
+                                                                        <Style TargetType="TextBlock">
+                                                                            <Setter Property="Text">
+                                                                                <Setter.Value>
+                                                                                    <Binding Path="DbVocab.BCCJWRank" Converter="{StaticResource IntegerToOrdinalStringConverter}"
+                                                                                        StringFormat="{}{0}" />
+                                                                                </Setter.Value>
+                                                                            </Setter>
+                                                                            <Setter Property="FontSize" Value="10" />
+                                                                            <Setter Property="Foreground" Value="#555555" />
+                                                                        </Style>
+                                                                    </TextBlock.Style>
+                                                                </TextBlock>
+                                                            </DockPanel>
+                                                        </Border>
+                                                        
+                                                        <Border Margin="5 0 0 0" BorderThickness="1" BorderBrush="#55000000" CornerRadius="2"
+                                                            HorizontalAlignment="Left" Padding="5 0 5 0"
+                                                            Visibility="{Binding ShowBCCJWLRank, Converter={StaticResource ValueToVisibilityConverter}}"
+                                                            Background="{Binding DbVocab.BCCJWLRank, Converter={StaticResource BCCJWLRankToBrushConverter}}">
+                                                            <Border.ToolTip>
+                                                                <ToolTip Content="{Binding DbVocab.BCCJWLRank, Converter={StaticResource IntegerToOrdinalStringConverter}}"
+                                                                    ContentStringFormat="{}{0} frequency position in BCCJW ranking with compounds." />
+                                                            </Border.ToolTip>
+                                                            <DockPanel LastChildFill="True">
+                                                                <TextBlock HorizontalAlignment="Left" FontSize="10" DockPanel.Dock="Left" Margin="0 0 6 0" FontWeight="SemiBold">
+                                                                    BL
+                                                                </TextBlock>
+                                                                <TextBlock HorizontalAlignment="Center">
+                                                                    <TextBlock.Style>
+                                                                        <Style TargetType="TextBlock">
+                                                                            <Setter Property="Text">
+                                                                                <Setter.Value>
+                                                                                    <Binding Path="DbVocab.BCCJWLRank" Converter="{StaticResource IntegerToOrdinalStringConverter}"
+                                                                                        StringFormat="{}{0}" />
                                                                                 </Setter.Value>
                                                                             </Setter>
                                                                             <Setter Property="FontSize" Value="10" />

@@ -51,6 +51,7 @@ namespace Kanji.Database.Helpers
         public const string Field_Kanji_UnicodeValue = "UnicodeValue";
         public const string Field_Kanji_NewspaperRank = "NewspaperRank";
         public const string Field_Kanji_WaniKaniLevel = "WkLevel";
+        public const string Field_Kanji_KKLCLevel = "KKLCLevel";
 
         #endregion
 
@@ -81,6 +82,8 @@ namespace Kanji.Database.Helpers
         public const string Field_Vocab_JlptLevel = "JlptLevel";
         public const string Field_Vocab_WaniKaniLevel = "WkLevel";
         public const string Field_Vocab_WikipediaRank = "WikiRank";
+        public const string Field_Vocab_BCCJWRank = "BCCJWRank";
+        public const string Field_Vocab_BCCJWLRank = "BCCJWLRank";
         public const string Field_Vocab_GroupId = "GroupId";
         public const string Field_Vocab_IsMain = "IsMain";
 

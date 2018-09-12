@@ -272,6 +272,11 @@ namespace Kanji.Interface.ViewModels
         public RelayCommand EditSingleSelectionCommand { get; set; }
 
         /// <summary>
+        /// Gets or sets the command used to edit the only selected item.
+        /// </summary>
+        public RelayCommand LookUpSelectionCommand { get; set; }
+
+        /// <summary>
         /// Gets or sets the command used to switch the bulk edit mode to
         /// the meaning note mode.
         /// </summary>
@@ -382,6 +387,7 @@ namespace Kanji.Interface.ViewModels
             UnselectCommand = new RelayCommand(OnUnselect);
             SelectAllCommand = new RelayCommand(OnSelectAll);
             EditSingleSelectionCommand = new RelayCommand(OnEditSingleSelection);
+            EditSingleSelectionCommand = new RelayCommand(OnLookUpSelection);
             BulkEditMeaningNoteCommand = new RelayCommand(OnBulkEditMeaningNote);
             BulkEditReadingNoteCommand = new RelayCommand(OnBulkEditReadingNote);
             BulkEditTagsCommand = new RelayCommand(OnBulkEditTags);
@@ -452,6 +458,29 @@ namespace Kanji.Interface.ViewModels
                 SelectionSuccessRatio = (double)successCount / (double)(SelectionTotalReviews);
             }
         }
+
+        /// <summary>
+        /// Calls the SRS entry edition window to edit the
+        /// given item.
+        /// </summary>
+        /// <param name="item">Item to edit.</param>
+        private void LookUpItem(FilteringSrsEntry item)
+        {
+            EditSingleItem(item);
+            if (item != null)
+            {
+                if (item.IsKanji)
+                {
+                    //NavigationActor.Instance.NavigateToKanji(item.AssociatedKanji[0].ToString());
+                }
+                else
+                {
+                    
+
+                }
+            }
+        }
+
 
         /// <summary>
         /// Calls the SRS entry edition window to edit the
@@ -695,6 +724,18 @@ namespace Kanji.Interface.ViewModels
 
             RefreshSelection();
             _isSetSelectionAllowed = true;
+        }
+
+        /// <summary>
+        /// Command callback. Calls the SRS entry edition window
+        /// to edit the only selected item.
+        /// </summary>
+        private void OnLookUpSelection()
+        {
+            if (SelectedItems.Count == 1)
+            {
+                LookUpItem(SelectedItems.First());
+            }
         }
 
         /// <summary>

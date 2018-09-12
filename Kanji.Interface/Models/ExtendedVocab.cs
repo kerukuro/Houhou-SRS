@@ -106,6 +106,16 @@ namespace Kanji.Interface.Models
             get { return DbVocab.WikipediaRank.HasValue && Kanji.Interface.Properties.Settings.Default.ShowVocabWikipediaRank; }
         }
 
+        public bool ShowBCCJWRank
+        {
+            get { return DbVocab.BCCJWRank.HasValue && Kanji.Interface.Properties.Settings.Default.ShowVocabWikipediaRank; }
+        }
+
+        public bool ShowBCCJWLRank
+        {
+            get { return DbVocab.BCCJWLRank.HasValue && Kanji.Interface.Properties.Settings.Default.ShowVocabWikipediaRank; }
+        }
+
         public bool ShowJlptLevel
         {
             get { return DbVocab.JlptLevel.HasValue && Kanji.Interface.Properties.Settings.Default.ShowVocabJlptLevel; }

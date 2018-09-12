@@ -25,6 +25,8 @@ namespace Kanji.Database.Entities
         public string Furigana { get; set; }
         public Nullable<int> WaniKaniLevel { get; set; }
         public Nullable<int> WikipediaRank { get; set; }
+        public Nullable<int> BCCJWRank { get; set; }
+        public Nullable<int> BCCJWLRank { get; set; }
         public int GroupId { get; set; }
         public bool IsMain { get; set; }
     
@@ -52,7 +54,9 @@ namespace Kanji.Database.Entities
                 { SqlHelper.Field_Vocab_WaniKaniLevel, DbType.Int32 },
                 { SqlHelper.Field_Vocab_WikipediaRank, DbType.Int32 },
                 { SqlHelper.Field_Vocab_GroupId, DbType.Int32 },
-                { SqlHelper.Field_Vocab_IsMain, DbType.Boolean }
+                { SqlHelper.Field_Vocab_IsMain, DbType.Boolean },
+                { SqlHelper.Field_Vocab_BCCJWRank, DbType.Int32 },
+                { SqlHelper.Field_Vocab_BCCJWLRank, DbType.Int32 }
             };
         }
 
@@ -61,7 +65,7 @@ namespace Kanji.Database.Entities
             return new object[]
             {
                 IsCommon, KanaWriting, KanjiWriting, FrequencyRank, Furigana, JlptLevel, WaniKaniLevel,
-                WikipediaRank, GroupId, IsMain
+                WikipediaRank, GroupId, IsMain, BCCJWRank, BCCJWLRank
             };
         }
 
