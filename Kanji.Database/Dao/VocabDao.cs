@@ -387,6 +387,13 @@ namespace Kanji.Database.Dao
                 readingFilter, meaningFilter, categoryFilter, jlptLevel, wkLevel);
 
             string sortClause = "ORDER BY ";
+
+            // display exact matches first
+            sortClause += string.Format("CASE WHEN v.{0} = @exactReading OR v.{1} = @exactReading THEN 0 ELSE 1 END, ",
+                    SqlHelper.Field_Vocab_KanaWriting,
+                    SqlHelper.Field_Vocab_KanjiWriting);
+            parameters.Add(new DaoParameter("@exactReading", readingFilter));
+
             if (isCommonFirst)
             {
                 sortClause += string.Format("v.{0} DESC,"
