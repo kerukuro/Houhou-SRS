@@ -52,6 +52,8 @@ namespace Kanji.DatabaseMaker
         private Dictionary<string, int> _frequencyRankDictionary;
         private Dictionary<string, int> _waniKaniDictionary;
         private Dictionary<string, int> _kklcDictionary;
+        private Dictionary<string, int> _cdjuDictionary;
+        private Dictionary<string, int> _cdjglDictionary;
         private log4net.ILog _log;
 
         private ZipArchive _svgZipArchive;
@@ -88,6 +90,8 @@ namespace Kanji.DatabaseMaker
             CreateFrequencyRankDictionary();
             CreateWkDictionary();
             CreateKKLCDictionary();
+            CreateCDJUDictionary();
+            CreateCDJGLDictionary();
         }
 
         #endregion
@@ -139,6 +143,40 @@ namespace Kanji.DatabaseMaker
                 if (!_frequencyRankDictionary.ContainsKey(split[0]))
                 {
                     _frequencyRankDictionary.Add(split[0], i++);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Reads the WaniKani kanji list file and fills a dictionary that will be used to look up the info
+        /// during the execution of the ETL.
+        /// </summary>
+        private void CreateCDJUDictionary()
+        {
+            _cdjuDictionary = new Dictionary<string, int>();
+            foreach (string line in File.ReadLines(PathHelper.CDJUKanjiListPath))
+            {
+                for (int i = 0; i < line.Length; i++)
+                {
+                    if (!_cdjuDictionary.ContainsKey(line[i].ToString()))
+                        _cdjuDictionary.Add(line[i].ToString(), i + 1);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Reads the WaniKani kanji list file and fills a dictionary that will be used to look up the info
+        /// during the execution of the ETL.
+        /// </summary>
+        private void CreateCDJGLDictionary()
+        {
+            _cdjglDictionary = new Dictionary<string, int>();
+            foreach (string line in File.ReadLines(PathHelper.CDJGLKanjiListPath))
+            {
+                for (int i = 0; i < line.Length; i++)
+                {
+                    if (!_cdjglDictionary.ContainsKey(line[i].ToString()))
+                        _cdjglDictionary.Add(line[i].ToString(), i + 1);
                 }
             }
         }
@@ -356,6 +394,19 @@ namespace Kanji.DatabaseMaker
                 {
                     kanji.KKLCLevel = _kklcDictionary[kanji.Character];
                 }
+
+                // Find the WaniKani level using the dictionary.
+                if (_cdjuDictionary.ContainsKey(kanji.Character))
+                {
+                    kanji.CDJULevel = _cdjuDictionary[kanji.Character];
+                }
+
+                // Find the WaniKani level using the dictionary.
+                if (_cdjglDictionary.ContainsKey(kanji.Character))
+                {
+                    kanji.CDJGLLevel = _cdjglDictionary[kanji.Character];
+                }
+
 
                 // In the reading/meaning node...
                 XElement xreadingMeaning = xkanji.Element(XmlNode_ReadingMeaning);

@@ -40,6 +40,8 @@
     <converters:WikipediaRankToBrushConverter x:Key="WikipediaRankToBrushConverter" />
     <converters:WikipediaRankToBrushConverter x:Key="BCCJWRankToBrushConverter" />
     <converters:WikipediaRankToBrushConverter x:Key="BCCJWLRankToBrushConverter" />
+    <converters:WikipediaRankToBrushConverter x:Key="VDRJURankToBrushConverter" />
+    <converters:WikipediaRankToBrushConverter x:Key="VDRJGLRankToBrushConverter" />
     <converters:ExtendedVocabToVariantListConverter x:Key="ExtendedVocabToVariantListConverter" />
     <converters:NullValueToVisibilityConverter x:Key="NullValueToVisibilityConverter" />
 
@@ -1334,6 +1336,64 @@
                                                                             <Setter Property="Text">
                                                                                 <Setter.Value>
                                                                                     <Binding Path="DbVocab.BCCJWLRank" Converter="{StaticResource IntegerToOrdinalStringConverter}"
+                                                                                        StringFormat="{}{0}" />
+                                                                                </Setter.Value>
+                                                                            </Setter>
+                                                                            <Setter Property="FontSize" Value="10" />
+                                                                            <Setter Property="Foreground" Value="#555555" />
+                                                                        </Style>
+                                                                    </TextBlock.Style>
+                                                                </TextBlock>
+                                                            </DockPanel>
+                                                        </Border>
+
+                                                        <Border Margin="5 0 0 0" BorderThickness="1" BorderBrush="#55000000" CornerRadius="2"
+                                                            HorizontalAlignment="Left" Padding="5 0 5 0"
+                                                            Visibility="{Binding ShowVDRJURank, Converter={StaticResource ValueToVisibilityConverter}}"
+                                                            Background="{Binding DbVocab.VDRJURank, Converter={StaticResource VDRJURankToBrushConverter}}">
+                                                            <Border.ToolTip>
+                                                                <ToolTip Content="{Binding DbVocab.VDRJURank, Converter={StaticResource IntegerToOrdinalStringConverter}}"
+                                                                    ContentStringFormat="{}{0} frequency position in Vocabulary Database for Reading Japanese." />
+                                                            </Border.ToolTip>
+                                                            <DockPanel LastChildFill="True">
+                                                                <TextBlock HorizontalAlignment="Left" FontSize="10" DockPanel.Dock="Left" Margin="0 0 6 0" FontWeight="SemiBold">
+                                                                    VU
+                                                                </TextBlock>
+                                                                <TextBlock HorizontalAlignment="Center">
+                                                                    <TextBlock.Style>
+                                                                        <Style TargetType="TextBlock">
+                                                                            <Setter Property="Text">
+                                                                                <Setter.Value>
+                                                                                    <Binding Path="DbVocab.VDRJURank" Converter="{StaticResource IntegerToOrdinalStringConverter}"
+                                                                                        StringFormat="{}{0}" />
+                                                                                </Setter.Value>
+                                                                            </Setter>
+                                                                            <Setter Property="FontSize" Value="10" />
+                                                                            <Setter Property="Foreground" Value="#555555" />
+                                                                        </Style>
+                                                                    </TextBlock.Style>
+                                                                </TextBlock>
+                                                            </DockPanel>
+                                                        </Border>
+
+                                                        <Border Margin="5 0 0 0" BorderThickness="1" BorderBrush="#55000000" CornerRadius="2"
+                                                            HorizontalAlignment="Left" Padding="5 0 5 0"
+                                                            Visibility="{Binding ShowVDRJGLRank, Converter={StaticResource ValueToVisibilityConverter}}"
+                                                            Background="{Binding DbVocab.VDRJGLRank, Converter={StaticResource BCCJWLRankToBrushConverter}}">
+                                                            <Border.ToolTip>
+                                                                <ToolTip Content="{Binding DbVocab.VDRJGLRank, Converter={StaticResource IntegerToOrdinalStringConverter}}"
+                                                                    ContentStringFormat="{}{0} frequency position in Vocabulary Database for Reading Japanese (for General Learners)." />
+                                                            </Border.ToolTip>
+                                                            <DockPanel LastChildFill="True">
+                                                                <TextBlock HorizontalAlignment="Left" FontSize="10" DockPanel.Dock="Left" Margin="0 0 6 0" FontWeight="SemiBold">
+                                                                    VG
+                                                                </TextBlock>
+                                                                <TextBlock HorizontalAlignment="Center">
+                                                                    <TextBlock.Style>
+                                                                        <Style TargetType="TextBlock">
+                                                                            <Setter Property="Text">
+                                                                                <Setter.Value>
+                                                                                    <Binding Path="DbVocab.VDRJGLRank" Converter="{StaticResource IntegerToOrdinalStringConverter}"
                                                                                         StringFormat="{}{0}" />
                                                                                 </Setter.Value>
                                                                             </Setter>

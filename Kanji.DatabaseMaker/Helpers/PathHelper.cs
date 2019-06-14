@@ -19,6 +19,8 @@ namespace Kanji.DatabaseMaker
         public static readonly string TopVocabularyFrequencyPath = Path.Combine(ResourcesBasePath, "TopVocabularyFrequency.txt");
         public static readonly string BCCJWVocabularyFrequencyPath = Path.Combine(ResourcesBasePath, "BCCWJVocabularyFrequency.txt");
         public static readonly string BCCJWLVocabularyFrequencyPath = Path.Combine(ResourcesBasePath, "BCCWJLVocabularyFrequency.txt");
+        public static readonly string VDRJGLVocabularyFrequencyPath = Path.Combine(ResourcesBasePath, "VDRJ_gl_ranking.txt");
+        public static readonly string VDRJUVocabularyFrequencyPath = Path.Combine(ResourcesBasePath, "VDRJ_u_ranking.txt");
         public static readonly string JmDictFuriganaPath = Path.Combine(ResourcesBasePath, "JmdictFurigana.txt");
         public static readonly string JlptKanjiListPath = Path.Combine(ResourcesBasePath, "JLPTKanjiList.txt");
         public static readonly string JlptVocabListPath = Path.Combine(ResourcesBasePath, "JLPTVocabList.txt");
@@ -28,5 +30,7 @@ namespace Kanji.DatabaseMaker
         public static readonly string WaniKaniKanjiListPath = Path.Combine(ResourcesBasePath, "WaniKaniKanjiList.txt");
         public static readonly string WaniKaniVocabListPath = Path.Combine(ResourcesBasePath, "WaniKaniVocabList.txt");
         public static readonly string KKLCKanjiListPath = Path.Combine(ResourcesBasePath, "KKLCKanjiList.txt");
+        public static readonly string CDJUKanjiListPath = Path.Combine(ResourcesBasePath, "CDJ_u_ranking.txt");
+        public static readonly string CDJGLKanjiListPath = Path.Combine(ResourcesBasePath, "CDJ_gl_ranking.txt");
     }
 }

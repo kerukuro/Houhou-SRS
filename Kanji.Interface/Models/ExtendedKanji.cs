@@ -65,6 +65,16 @@ namespace Kanji.Interface.Models
             get { return DbKanji.KKLCLevel.HasValue && Kanji.Interface.Properties.Settings.Default.ShowKanjiWkLevel; }
         }
 
+        public bool ShowCDJULevel
+        {
+            get { return DbKanji.CDJULevel.HasValue && Kanji.Interface.Properties.Settings.Default.ShowKanjiWkLevel; }
+        }
+
+        public bool ShowCDJGLLevel
+        {
+            get { return DbKanji.CDJGLLevel.HasValue && Kanji.Interface.Properties.Settings.Default.ShowKanjiWkLevel; }
+        }
+
         public bool ShowStrokes
         {
             get { return Kanji.Interface.Properties.Settings.Default.ShowKanjiStrokes; }

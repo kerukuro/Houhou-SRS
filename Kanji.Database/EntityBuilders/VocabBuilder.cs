@@ -24,6 +24,8 @@ namespace Kanji.Database.EntityBuilders
             vocab.WikipediaRank = row.ReadInt(GetField(prefix, SqlHelper.Field_Vocab_WikipediaRank));
             vocab.BCCJWRank = row.ReadInt(GetField(prefix, SqlHelper.Field_Vocab_BCCJWRank));
             vocab.BCCJWLRank = row.ReadInt(GetField(prefix, SqlHelper.Field_Vocab_BCCJWLRank));
+            vocab.VDRJURank = row.ReadInt(GetField(prefix, SqlHelper.Field_Vocab_VDRJURank));
+            vocab.VDRJGLRank = row.ReadInt(GetField(prefix, SqlHelper.Field_Vocab_VDRJGLRank));
             vocab.WaniKaniLevel = row.ReadInt(GetField(prefix, SqlHelper.Field_Vocab_WaniKaniLevel));
             vocab.GroupId = row.ReadInt(GetField(prefix, SqlHelper.Field_Vocab_GroupId)).Value;
             vocab.IsMain = row.ReadBool(GetField(prefix, SqlHelper.Field_Vocab_IsMain)).Value;

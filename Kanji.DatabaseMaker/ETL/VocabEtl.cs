@@ -71,6 +71,8 @@ namespace Kanji.DatabaseMaker
         private Dictionary<string, int> _topFrequencyWords;
         private Dictionary<string, int> _bccjwFrequencyWords;
         private Dictionary<string, int> _bccjwlFrequencyWords;
+        private Dictionary<string, int> _vdrjuFrequencyWords;
+        private Dictionary<string, int> _vdrjglFrequencyWords;
         private Dictionary<string, int> _waniKaniDictionary;
 
         #endregion
@@ -130,6 +132,10 @@ namespace Kanji.DatabaseMaker
             _log.InfoFormat("Read {0} BCCJW frequency words.", _bccjwFrequencyWords.Count);
             GetBCCJWLFrequencyWords();
             _log.InfoFormat("Read {0} BCCJWL frequency words.", _bccjwlFrequencyWords.Count);
+            GetVDRJUFrequencyWords();
+            _log.InfoFormat("Read {0} VDRJU frequency words.", _vdrjuFrequencyWords.Count);
+            GetVDRJGLFrequencyWords();
+            _log.InfoFormat("Read {0} VDRJGL frequency words.", _vdrjglFrequencyWords.Count);
 
             // Read the dictionary and browse each resulting vocab.
             List<VocabEntity> vocabList = new List<VocabEntity>(BatchSize);
@@ -223,6 +229,8 @@ namespace Kanji.DatabaseMaker
             AttachWikipediaRank(vocabList);
             AttachBCCJWRank(vocabList);
             AttachBCCJWLRank(vocabList);
+            AttachVDRJURank(vocabList);
+            AttachVDRJGLRank(vocabList);
             InsertData(vocabList);
         }
 
@@ -392,6 +400,32 @@ namespace Kanji.DatabaseMaker
             }
         }
 
+        private void AttachVDRJURank(List<VocabEntity> vocabList)
+        {
+            foreach (VocabEntity v in vocabList)
+            {
+                // Find the word in the frequency list.
+                // Only for main vocab.
+                if (v.IsMain && !string.IsNullOrWhiteSpace(v.KanjiWriting) && _vdrjuFrequencyWords.ContainsKey(v.KanjiWriting))
+                {
+                    v.VDRJURank = _vdrjuFrequencyWords[v.KanjiWriting];
+                }
+            }
+        }
+
+        private void AttachVDRJGLRank(List<VocabEntity> vocabList)
+        {
+            foreach (VocabEntity v in vocabList)
+            {
+                // Find the word in the frequency list.
+                // Only for main vocab.
+                if (v.IsMain && !string.IsNullOrWhiteSpace(v.KanjiWriting) && _vdrjglFrequencyWords.ContainsKey(v.KanjiWriting))
+                {
+                    v.VDRJGLRank = _vdrjglFrequencyWords[v.KanjiWriting];
+                }
+            }
+        }
+
         /// <summary>
         /// Reads the most used words and puts the result in the decicated field.
         /// </summary>
@@ -440,6 +474,37 @@ namespace Kanji.DatabaseMaker
             }
         }
 
+
+        /// <summary>
+        /// Reads the most used words and puts the result in the decicated field.
+        /// </summary>
+        private void GetVDRJUFrequencyWords()
+        {
+            string[] words = File.ReadAllLines(PathHelper.VDRJUVocabularyFrequencyPath);
+            _vdrjuFrequencyWords = new Dictionary<string, int>();
+            for (int i = 0; i < words.Count(); i++)
+            {
+                if (!_vdrjuFrequencyWords.ContainsKey(words[i]))
+                {
+                    _vdrjuFrequencyWords.Add(words[i], _vdrjuFrequencyWords.Count + 1);
+                }
+            }
+        }
+        /// <summary>
+        /// Reads the most used words and puts the result in the decicated field.
+        /// </summary>
+        private void GetVDRJGLFrequencyWords()
+        {
+            string[] words = File.ReadAllLines(PathHelper.VDRJGLVocabularyFrequencyPath);
+            _vdrjglFrequencyWords = new Dictionary<string, int>();
+            for (int i = 0; i < words.Count(); i++)
+            {
+                if (!_vdrjglFrequencyWords.ContainsKey(words[i]))
+                {
+                    _vdrjglFrequencyWords.Add(words[i], _vdrjglFrequencyWords.Count + 1);
+                }
+            }
+        }
 
         /// <summary>
         /// Reads the WaniKani vocab list file and builds the dictionary that will be used

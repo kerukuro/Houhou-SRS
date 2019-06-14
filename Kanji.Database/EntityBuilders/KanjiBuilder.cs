@@ -27,6 +27,8 @@ namespace Kanji.Database.EntityBuilders
             kanji.NewspaperRank = row.ReadInt(GetField(prefix, SqlHelper.Field_Kanji_NewspaperRank));
             kanji.WaniKaniLevel = row.ReadInt(GetField(prefix, SqlHelper.Field_Kanji_WaniKaniLevel));
             kanji.KKLCLevel = row.ReadInt(GetField(prefix, SqlHelper.Field_Kanji_KKLCLevel));
+            kanji.CDJULevel = row.ReadInt(GetField(prefix, SqlHelper.Field_Kanji_CDJULevel));
+            kanji.CDJGLLevel = row.ReadInt(GetField(prefix, SqlHelper.Field_Kanji_CDJGLLevel));
 
             return kanji;
         }

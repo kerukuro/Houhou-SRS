@@ -117,6 +117,68 @@
                     </StackPanel>
                 </Border>
                 <Border CornerRadius="4" Width="70" Height="60" BorderBrush="{StaticResource FadedBorderBrush}" BorderThickness="1" Margin="0 0 10 0"
+                    Visibility="{Binding KanjiEntity.ShowCDJGLLevel, Converter={StaticResource ValueToVisibilityConverter}}" Cursor="Hand">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
+                            <i:InvokeCommandAction Command="{Binding WaniKaniCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <Border.ToolTip>
+                        <ToolTip Content="{Binding KanjiEntity.DbKanji.CDJGLLevel}"
+                            ContentStringFormat="{}Kanji number {0} in Character Database of Modern Japanese for General Learner." />
+                    </Border.ToolTip>
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#3359B859" />
+                                </Trigger>
+                            </Style.Triggers>
+                            <Setter Property="Background" Value="#3377FF77" />
+                        </Style>
+                    </Border.Style>
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock HorizontalAlignment="Center" FontSize="16">
+                            <TextBlock.Text>
+                                <Binding Path="KanjiEntity.DbKanji.CDJGLLevel" StringFormat="{}{0}" />
+                            </TextBlock.Text>
+                        </TextBlock>
+                        <TextBlock Style="{StaticResource LegendText}" HorizontalAlignment="Center" Text="CDJGL Rank" FontSize="11" />
+                    </StackPanel>
+                </Border>
+                <Border CornerRadius="4" Width="70" Height="60" BorderBrush="{StaticResource FadedBorderBrush}" BorderThickness="1" Margin="0 0 10 0"
+                    Visibility="{Binding KanjiEntity.ShowCDJULevel, Converter={StaticResource ValueToVisibilityConverter}}" Cursor="Hand">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
+                            <i:InvokeCommandAction Command="{Binding WaniKaniCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <Border.ToolTip>
+                        <ToolTip Content="{Binding KanjiEntity.DbKanji.CDJULevel}"
+                            ContentStringFormat="{}Kanji number {0} in Character Database of Modern Japanese." />
+                    </Border.ToolTip>
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#3359B859" />
+                                </Trigger>
+                            </Style.Triggers>
+                            <Setter Property="Background" Value="#3377FF77" />
+                        </Style>
+                    </Border.Style>
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock HorizontalAlignment="Center" FontSize="16">
+                            <TextBlock.Text>
+                                <Binding Path="KanjiEntity.DbKanji.CDJULevel" StringFormat="{}{0}" />
+                            </TextBlock.Text>
+                        </TextBlock>
+                        <TextBlock Style="{StaticResource LegendText}" HorizontalAlignment="Center" Text="CDJU Rank" FontSize="11" />
+                    </StackPanel>
+                </Border>
+
+
+                <Border CornerRadius="4" Width="70" Height="60" BorderBrush="{StaticResource FadedBorderBrush}" BorderThickness="1" Margin="0 0 10 0"
                     Background="#3377FF77" Visibility="{Binding KanjiEntity.ShowGrade, Converter={StaticResource ValueToVisibilityConverter}}">
                     <Border.Style>
                         <Style TargetType="Border">
