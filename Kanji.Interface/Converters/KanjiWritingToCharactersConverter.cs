@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,6 +7,7 @@ using System.Windows.Data;
 using Kanji.Database.Entities;
 using Kanji.Interface.Models;
 using Kanji.Common.Helpers;
+using System.Globalization;
 
 namespace Kanji.Interface.Converters
 {
@@ -28,9 +29,10 @@ namespace Kanji.Interface.Converters
                     {
                         // No kanji writing. Use the kana writing.
                         p.Characters = new List<KanjiWritingCharacter>(vocab.KanaWriting.Length);
-                        foreach (char c in vocab.KanaWriting)
+                        TextElementEnumerator charEnum = StringInfo.GetTextElementEnumerator(vocab.KanaWriting);
+                        while (charEnum.MoveNext())
                         {
-                            p.Characters.Add(MakeCharacter(vocab, c));
+                            p.Characters.Add(MakeCharacter(vocab, charEnum.GetTextElement()));
                         }
                     }
                     else
@@ -38,9 +40,10 @@ namespace Kanji.Interface.Converters
                         // Existing kanji writing. Set the furigana to be the whole kana writing.
                         p.Furigana = p.Furigana = vocab.KanaWriting;
                         p.Characters = new List<KanjiWritingCharacter>(vocab.KanjiWriting.Length);
-                        foreach (char c in vocab.KanjiWriting)
+                        TextElementEnumerator charEnum = StringInfo.GetTextElementEnumerator(vocab.KanjiWriting);
+                        while (charEnum.MoveNext())
                         {
-                            p.Characters.Add(MakeCharacter(vocab, c));
+                            p.Characters.Add(MakeCharacter(vocab, charEnum.GetTextElement()));
                         }
                     }
 
@@ -54,9 +57,14 @@ namespace Kanji.Interface.Converters
                     List<VocabWritingPart> parts = new List<VocabWritingPart>();
                     string currentPart = string.Empty;
                     // Browse each character to build the vocab writing parts.
-                    for (int i = 0; i < vocab.KanjiWriting.Length; i++)
+                    TextElementEnumerator charEnum = StringInfo.GetTextElementEnumerator(vocab.KanjiWriting);
+                    Int32[] textElemIndex = StringInfo.ParseCombiningCharacters(vocab.KanjiWriting);
+                    StringInfo kanjiWritingInfo = new StringInfo(vocab.KanjiWriting);
+
+
+                    for (int i = 0; i < textElemIndex.Length; i++)
                     {
-                        char c = vocab.KanjiWriting[i];
+                        string c = kanjiWritingInfo.SubstringByTextElements(textElemIndex[i], 1);
                         FuriganaPart cover = furiganaParts.FirstOrDefault(f => f.CoversIndex(i));
                         if (cover == null)
                         {
@@ -103,10 +111,12 @@ namespace Kanji.Interface.Converters
             part.OriginalVocab = vocab;
             part.Furigana = furiganaPart.Value;
             part.Characters = new List<KanjiWritingCharacter>();
+            Int32[] textElemIndex = StringInfo.ParseCombiningCharacters(vocab.KanjiWriting);
+            StringInfo kanjiWritingInfo = new StringInfo(vocab.KanjiWriting);
 
             for (int i = furiganaPart.StartIndex; i <= furiganaPart.EndIndex; i++)
             {
-                part.Characters.Add(MakeCharacter(vocab, vocab.KanjiWriting[i]));
+                part.Characters.Add(MakeCharacter(vocab, kanjiWritingInfo.SubstringByTextElements(textElemIndex[i], 1)));
             }
 
             return part;
@@ -118,19 +128,20 @@ namespace Kanji.Interface.Converters
             part.Furigana = string.Empty;
             part.OriginalVocab = vocab;
             part.Characters = new List<KanjiWritingCharacter>();
-            foreach (char c in reading)
+            TextElementEnumerator charEnum = StringInfo.GetTextElementEnumerator(reading);
+            while (charEnum.MoveNext())
             {
-                part.Characters.Add(MakeCharacter(vocab, c));
+                part.Characters.Add(MakeCharacter(vocab, charEnum.GetTextElement()));
             }
             return part;
         }
 
-        private KanjiWritingCharacter MakeCharacter(VocabEntity vocab, char c)
+        private KanjiWritingCharacter MakeCharacter(VocabEntity vocab, string c)
         {
             return new KanjiWritingCharacter()
             {
                 Character = c,
-                Kanji = vocab.Kanji.Where(k => k.Character == c.ToString()).FirstOrDefault(),
+                Kanji = vocab.Kanji.Where(k => k.Character == c).FirstOrDefault(),
                 OriginalVocab = vocab
             };
         }

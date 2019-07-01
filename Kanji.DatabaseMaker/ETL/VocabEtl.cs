@@ -759,10 +759,11 @@ namespace Kanji.DatabaseMaker
                     if (!string.IsNullOrEmpty(vocab.KanjiWriting))
                     {
                         // Browse each character
-                        foreach (char c in vocab.KanjiWriting)
+                        TextElementEnumerator charEnum = StringInfo.GetTextElementEnumerator(vocab.KanjiWriting);
+                        while (charEnum.MoveNext())
                         {
                             // Attempt to find a kanji matching the character.
-                            string s = c.ToString();
+                            string s = charEnum.GetTextElement();
                             KanjiEntity kanji = _kanjiDictionary.ContainsKey(s) ? _kanjiDictionary[s] : null;
                             if (kanji != null)
                             {
