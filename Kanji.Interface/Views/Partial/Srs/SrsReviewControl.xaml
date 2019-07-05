@@ -110,7 +110,9 @@
                 <Viewbox Grid.Column="1" Grid.Row="1">
                     <TextBox Style="{StaticResource LabelBox}"
                         Text="{Binding CurrentQuestion.ParentGroup.Item, Mode=OneWay}"
-                        Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"
+                        FontFamily="../../../Data/Fonts/NotoSansCJKjp-DemiLight.otf#Noto Sans CJK JP DemiLight"
+                        />
                 </Viewbox>
 
                 <!-- Level up indicator -->

@@ -58,13 +58,12 @@ namespace Kanji.Interface.Converters
                     string currentPart = string.Empty;
                     // Browse each character to build the vocab writing parts.
                     TextElementEnumerator charEnum = StringInfo.GetTextElementEnumerator(vocab.KanjiWriting);
-                    Int32[] textElemIndex = StringInfo.ParseCombiningCharacters(vocab.KanjiWriting);
                     StringInfo kanjiWritingInfo = new StringInfo(vocab.KanjiWriting);
 
 
-                    for (int i = 0; i < textElemIndex.Length; i++)
+                    for (int i = 0; i < kanjiWritingInfo.LengthInTextElements; i++)
                     {
-                        string c = kanjiWritingInfo.SubstringByTextElements(textElemIndex[i], 1);
+                        string c = kanjiWritingInfo.SubstringByTextElements(i, 1);
                         FuriganaPart cover = furiganaParts.FirstOrDefault(f => f.CoversIndex(i));
                         if (cover == null)
                         {
@@ -111,12 +110,11 @@ namespace Kanji.Interface.Converters
             part.OriginalVocab = vocab;
             part.Furigana = furiganaPart.Value;
             part.Characters = new List<KanjiWritingCharacter>();
-            Int32[] textElemIndex = StringInfo.ParseCombiningCharacters(vocab.KanjiWriting);
             StringInfo kanjiWritingInfo = new StringInfo(vocab.KanjiWriting);
 
             for (int i = furiganaPart.StartIndex; i <= furiganaPart.EndIndex; i++)
             {
-                part.Characters.Add(MakeCharacter(vocab, kanjiWritingInfo.SubstringByTextElements(textElemIndex[i], 1)));
+                part.Characters.Add(MakeCharacter(vocab, kanjiWritingInfo.SubstringByTextElements(i, 1)));
             }
 
             return part;
