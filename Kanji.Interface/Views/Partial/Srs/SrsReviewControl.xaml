@@ -107,7 +107,7 @@
                 </TextBlock>
                 
                 <!-- Text representation of the item -->
-                <Viewbox Grid.Column="1" Grid.Row="1">
+                <Viewbox Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3">
                     <TextBox Style="{StaticResource LabelBox}"
                         Text="{Binding CurrentQuestion.ParentGroup.Item, Mode=OneWay}"
                         Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"
